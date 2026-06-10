@@ -1,0 +1,430 @@
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+@font-face {
+    font-family: 'ArTarumianHeghnar';
+    src: url('/fonts/ArTarumianBarakU-Bold.ttf') format('woff2');
+}
+@font-face {
+    font-family: 'Heghnar';
+    src: url('../fonts/HEGHNAR.TTF') format('truetype');
+}
+@font-face {
+    font-family: 'MontserratARM';
+    src: url('../fonts/Montserratarm-Light.otf') format('woff2');
+    font-weight: 300;
+}
+@font-face {
+    font-family: 'MontserratARM';
+    src: url('../fonts/Montserratarm-Regular.otf') format('woff2');
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'MontserratARM';
+    src: url('../fonts/Montserratarm-Medium.otf') format('woff2');
+    font-weight: 500;
+}
+body {
+    font-family: 'Heghnar', 'ArTarumianHeghnar', serif;
+}
+#audio {
+    display: none;
+}
+.torn {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+.torn::after {
+    content: '';
+    position: absolute;
+    top: 0; 
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/img/torn-paper-background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.title {
+    width: max-content;
+    position: absolute;
+    top: 9vh;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    pointer-events: none;
+    z-index: 5;
+}
+.title h1 {
+    font-style: italic;
+    font-size: 40px;
+    color: #9a9590;
+    line-height: 1.25;
+    letter-spacing: .02em;
+    font-weight: 400;
+    opacity: 0;
+    animation: slideFromLeft 1.5s ease forwards;
+}
+.title h2 {
+    font-style: italic;
+    font-size: 40px;
+    color: #b0aba4;
+    font-weight: 400;
+    margin-top: 4px;
+    padding-left: 150px;
+    opacity: 0;
+    animation: slideFromRight 1.5s ease forwards;
+    animation-delay: 0.2s;
+}
+@keyframes slideFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes slideFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.container-scene {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+.scene {
+    position: absolute;
+    z-index: 10;
+    width: clamp(260px, 40vw, 423px);
+    aspect-ratio: 423 / 390;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.scene > * {
+    position: absolute;
+    left: 0; 
+    top: 0;
+    width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+.env-back {
+    background-image: url('/img/letter-2.jpg');
+    background-size: cover;
+    top: 9%;
+    width: 99%;
+    height: 45%;
+    z-index: 1;
+}
+.photo {
+    background-image: url('https://optim.tildacdn.one/tild6261-6662-4137-b061-343732343862/-/cover/466x325/center/center/-/format/webp/03_-_Copy.jpg.webp');
+    top: 12%; 
+    left: 0;
+    width: 99%; 
+    height: 70%;
+    z-index: 5;
+}
+.flap-cover {
+    background-image: url('/img/letter-4.png');
+    top: 8%;
+    height: 72%;
+    z-index: 6;
+    transform-origin: top center;
+    transition: transform 1s ease-in-out, opacity .05s 1s;
+}
+.env-front {
+    background-image: url('/img/letter-1.png');
+    z-index: 5;
+    pointer-events: none;
+}
+.flap-top {
+    background-image: url('/img/letter-3.png');
+    top: -50%; 
+    height: 59%;
+    z-index: 1;
+    transform-origin: bottom center;
+    transform: scaleY(0) translateY(10%);
+    opacity: 0;
+    transition: transform 1s cubic-bezier(.22,1,.36,1) 0s, opacity .05s 0s;
+}
+.stamp {
+    position: absolute;
+    left: 50%; 
+    top: 64%;
+    transform: translate(-50%, -50%);
+    width: 17%;
+    aspect-ratio: 1;
+    z-index: 6;
+    cursor: pointer;
+    background-image: url('/img/stamp.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: opacity .3s;
+}
+.stamp::before {
+    content: 'ԲԱՑԵԼ';
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(12px, .8vw, 14px);
+    font-family: 'MontserratARM', sans-serif;
+    color: #aaa;
+}
+.open-label {
+    position: fixed;
+    bottom: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    font-style: italic;
+    font-size: clamp(12px, 1.4vw, 17px);
+    color: #aaa;
+    letter-spacing: .1em;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity .3s;
+    text-align: center;
+}
+.open-label.show {
+    opacity: 1;
+}
+.chevron {
+    opacity: 1;
+    transition: opacity .3s;
+}
+.chevron.visible {
+    opacity: 0;
+}
+.chevron {
+    display: block;
+    margin: 8px auto 0;
+    width: 40px;
+    opacity: .6;
+    animation: chev 1.6s ease-in-out infinite;
+}
+@keyframes chev {
+    0%,100% { 
+        transform: translateY(0); 
+    }
+    50% { 
+        transform: translateY(6px); 
+    }
+}
+.opened .flap-top {
+    transform: scaleY(1) translateY(0);
+    opacity: 1;
+    transition: transform 1s cubic-bezier(.22,1,.36,1) .9s, opacity .05s .9s;
+}
+.opened .flap-cover {
+    transform: scaleY(0);
+    opacity: 0;
+    transition: transform 1s ease-in-out 0s, opacity .05s 1s;
+}
+.opened .stamp {
+    opacity: 0;
+    transition: opacity .3s ease-out;
+    pointer-events: none;
+}
+.opened .photo {
+    animation: inviteOpen 3s 1.5s forwards;
+}
+@keyframes inviteOpen {
+    0% {
+        transform: translateY(-50px);
+    }
+    40% {
+        transform: translateY(-250px);
+    }
+    70% {
+        transform: translateY(-250px) rotate(90deg);
+    }
+    100% {
+        z-index: 11;
+        transform: translateY(0) rotate(90deg) scale(1.8);
+    }
+}
+.event-schedule {
+    display: none;
+    position: relative;
+    max-width: 608px;
+    width: calc(100% - 16px);
+    margin: 0 auto;
+    padding: 50px 8px;
+}
+.event-schedule.opened {
+    display: block;
+}
+.arca-image {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: -1;
+    transform: translateX(-50%);
+    width: 100%;
+    background-image: linear-gradient(0.5turn, rgba(251, 251, 250, 1) 0%, rgba(252, 252, 233, 0) 100%);
+    border-radius: 300px 300px 0 0;
+}
+.arca-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.play-button {
+    width: clamp(50px, 10vw, 100px);
+    height: clamp(50px, 10vw, 100px);
+    margin: 0 auto 25px auto;
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
+.invitation-title {
+    color: #414653;
+    line-height: 1.55;
+    font-weight: 400;
+    font-size: 35px;
+    text-align: center;
+    padding-inline: 18px;
+}
+.invitation-text,
+.invitation-text {
+    color: #414653;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 25px;
+    text-align: center;
+    padding-inline: 10px;
+}
+.invitation-text {
+    margin-block: 20px;
+    font-family: 'MontserratARM', sans-serif;
+}
+.invitation-title:nth-child(4) {
+    margin: 50px 0 80px 0;
+}
+.invitation-card:nth-child(5) {
+    margin-bottom: 80px;
+}
+.invitation-card:nth-child(6) {
+    margin-bottom: 120px;
+}
+.invitation-card-time,
+.invitation-card-title,
+.invitation-card-text-one,
+.invitation-card-text-two {
+    color: #414653;
+    text-align: center;
+}
+.invitation-card-time {
+    font-size: 44px;
+    line-height: 68px;
+    font-weight: 400;
+    margin-bottom: 25px;
+}
+.invitation-card-title {
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 1.35;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    font-family: 'MontserratARM', sans-serif;
+}
+.invitation-card-text-one {
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 1.55;
+    margin-bottom: 15px;
+}
+.invitation-card-text-two {
+    font-size: 14px;
+    font-weight: 200;
+    line-height: 1.55;
+    margin-bottom: 15px;
+    font-family: 'MontserratARM', sans-serif;
+}
+.invitation-card a {
+    display: block;
+    width: 186px;
+    margin: 0 auto;
+    font-family: 'MontserratARM', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #414653;
+    text-align: center;
+    border: 1px solid rgba(65, 70, 83, 0.47);
+    border-radius: 25px;
+    padding-block: 12px;
+    text-decoration: none;
+}
+.word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(-30px);
+    filter: blur(10px);
+}
+.word.show {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    transition: opacity .8s ease, transform .8s ease, filter .8s ease;
+}
+.hr {
+    width: 200px;
+    height: 1px;
+    opacity: .4;
+    margin: 0 auto;
+    background: #414653;
+}
+.event-schedule-footer-title {
+    color: #414653;
+    font-size: 31px;
+    line-height: 1.55;
+    font-weight: 400;
+    text-align: center;
+    margin: 50px auto 25px auto;
+}
+.image-card {
+    width: clamp(270px, 30vw, 340px);
+    height: 400px;
+    background-image: url("https://static.tildacdn.one/tild3663-6430-4166-b535-633132313433/d6de6d354ecba2ae00d5.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 15px 15px 150px 150px;
+}
+.wrapper {
+    max-width: clamp(270px, 50vw, 340px);
+    width: 100%;
+    height: 400px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+}
+.wrapper.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+.wrapper img {
+    width: calc(clamp(270px, 50vw, 340px) + 30px);
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
