@@ -132,7 +132,7 @@ body {
     z-index: 1;
 }
 .photo {
-    background-image: url('https://optim.tildacdn.one/tild6261-6662-4137-b061-343732343862/-/cover/466x325/center/center/-/format/webp/03_-_Copy.jpg.webp');
+    background-image: url('../img/photo-of-the-newlyweds.jpg');
     top: 12%; 
     left: 0;
     width: 99%; 
