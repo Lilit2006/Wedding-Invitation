@@ -402,7 +402,7 @@ body {
 .image-card {
     width: clamp(270px, 30vw, 340px);
     height: 400px;
-    background-image: url("https://static.tildacdn.one/tild3663-6430-4166-b535-633132313433/d6de6d354ecba2ae00d5.jpg");
+    background-image: url("../img/end-photo-of-the-newlyweds.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
