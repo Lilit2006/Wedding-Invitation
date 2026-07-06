@@ -133,6 +133,8 @@ body {
 }
 .photo {
     background-image: url('../img/photo-of-the-newlyweds.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
     top: 12%; 
     left: 0;
     width: 99%; 
@@ -316,13 +318,10 @@ body {
     font-family: 'MontserratARM', sans-serif;
 }
 .invitation-title:nth-child(4) {
-    margin: 50px 0 80px 0;
+    margin: 50px 0;
 }
-.invitation-card:nth-child(5) {
-    margin-bottom: 80px;
-}
-.invitation-card:nth-child(6) {
-    margin-bottom: 120px;
+.invitation-card {
+    margin-bottom: 40px;
 }
 .invitation-card-time,
 .invitation-card-title,
